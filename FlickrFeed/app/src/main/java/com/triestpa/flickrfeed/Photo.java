@@ -9,6 +9,7 @@ public class Photo {
     private Calendar published;
     private Calendar dateTaken;
     private String photoLink;
+    private int id;
 
     public Photo() {
     }
@@ -68,5 +69,13 @@ public class Photo {
 
     public void setPhotoLink(String photoLink) {
         this.photoLink = photoLink;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

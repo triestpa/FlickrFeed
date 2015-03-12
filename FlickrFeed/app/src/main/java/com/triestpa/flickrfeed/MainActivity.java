@@ -2,14 +2,19 @@ package com.triestpa.flickrfeed;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import org.xmlpull.v1.XmlPullParser;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
@@ -24,7 +29,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new SpashScreenFragment())
                     .commit();
         }
 
@@ -33,6 +38,9 @@ public class MainActivity extends ActionBarActivity {
         AsyncTask<String, Integer, ArrayList<Photo>> parseTask = new XMLFeedParseTask().execute(url);
     }
 
+    public void endLoading() {
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,19 +64,46 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
+    //Aysnc task to download and parse feed from Flickr
+    class XMLFeedParseTask extends AsyncTask<String, Integer, ArrayList<Photo>> {
+        private final String TAG = XMLFeedParseTask.class.getSimpleName();
 
-        public PlaceholderFragment() {
+        XmlPullParser mParser;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_loading, container, false);
-            return rootView;
+        protected ArrayList<Photo> doInBackground(String[] params) {
+            try {
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder().url(params[0]).build();
+                Response response = client.newCall(request).execute();
+
+                InputStreamReader xmlData = (InputStreamReader) response.body().charStream();
+
+                FlickrFeedParser feedParser = new FlickrFeedParser();
+                ArrayList<Photo> photos = feedParser.parseXML(xmlData);
+            } catch (IOException e3) {
+                Log.e(TAG, e3.getMessage());
+                return null;
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Photo> photos) {
+            super.onPostExecute(photos);
+            endLoading();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer[] values) {
+            super.onProgressUpdate(values);
         }
     }
 }

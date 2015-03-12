@@ -1,18 +1,12 @@
 package com.triestpa.flickrfeed;
 
-import android.os.AsyncTask;
 import android.util.Log;
-
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,46 +15,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-public class XMLFeedParseTask extends AsyncTask<String, Integer, ArrayList<Photo>> {
-    private final String TAG = XMLFeedParseTask.class.getSimpleName();
+public class FlickrFeedParser {
+    private final String TAG = FlickrFeedParser.class.getSimpleName();
 
     XmlPullParser mParser;
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-
-    }
-
-    @Override
-    protected ArrayList<Photo> doInBackground(String[] params) {
-        try {
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder().url(params[0]).build();
-            Response response = client.newCall(request).execute();
-
-            InputStreamReader xmlData = (InputStreamReader) response.body().charStream();
-            ArrayList<Photo> photos = parseXML(xmlData);
-        }
-        catch (IOException e3) {
-            Log.e(TAG, e3.getMessage());
-            return null;
-        }
-
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(ArrayList<Photo> photos) {
-        super.onPostExecute(photos);
-    }
-
-    @Override
-    protected void onProgressUpdate(Integer[] values) {
-        super.onProgressUpdate(values);
-    }
-
-    private ArrayList<Photo> parseXML(Reader xmlData) {
+    public ArrayList<Photo> parseXML(Reader xmlData) {
         XmlPullParserFactory pullParserFactory;
         try {
             pullParserFactory = XmlPullParserFactory.newInstance();
@@ -140,20 +100,20 @@ public class XMLFeedParseTask extends AsyncTask<String, Integer, ArrayList<Photo
     }
 
     private String getAuthor() throws IOException, XmlPullParserException {
-            int eventType = mParser.next();
-            String eventName = mParser.getName();
+        int eventType = mParser.next();
+        String eventName = mParser.getName();
 
-            if (eventType == XmlPullParser.START_TAG) {
-                    if (eventName.equals("name")) {
-                       return mParser.nextText();
-                    }
+        if (eventType == XmlPullParser.START_TAG) {
+            if (eventName.equals("name")) {
+                return mParser.nextText();
             }
-            else if (eventType == XmlPullParser.END_TAG && eventName.equals("author")) {
-                return "No Author";
-            }
+        }
+        else if (eventType == XmlPullParser.END_TAG && eventName.equals("author")) {
+            return "No Author";
+        }
 
-            //Call the method recursively until the author has been found or the author tag is ended
-            return getAuthor();
+        //Call the method recursively until the author has been found or the author tag is ended
+        return getAuthor();
     }
 
     private String getURL() throws IOException, XmlPullParserException {
