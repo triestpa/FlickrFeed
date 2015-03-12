@@ -10,7 +10,6 @@ public class Photo {
     private Calendar dateTaken;
     private String photoLink;
 
-
     public Photo() {
     }
 

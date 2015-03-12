@@ -10,13 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends ActionBarActivity {
+    private final String TAG = MainActivity.class.getSimpleName();
+    private final String requestURL = "http://api.flickr.com/services/feeds/photos_public.gne?tags=boston";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -24,8 +29,8 @@ public class MainActivity extends ActionBarActivity {
         }
 
         String[] url = new String[1];
-        url[0] = "http://api.flickr.com/services/feeds/photos_public.gne?tags=boston";
-        AsyncTask<String, Integer, Integer> parseTask = new XMLFeedParseTask().execute(url);
+        url[0] = requestURL;
+        AsyncTask<String, Integer, ArrayList<Photo>> parseTask = new XMLFeedParseTask().execute(url);
     }
 
 
