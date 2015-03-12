@@ -1,14 +1,20 @@
 package com.triestpa.flickrfeed;
 
+import java.util.Calendar;
+
 public class Photo {
     private String title;
     private String author;
     private String shareLink;
-    private String published;
-    private String dateTaken;
+    private Calendar published;
+    private Calendar dateTaken;
     private String photoLink;
 
-    public Photo(String title, String author, String shareLink, String published, String dateTaken, String photoLink) {
+
+    public Photo() {
+    }
+
+    public Photo(String title, String author, String shareLink, Calendar published, Calendar dateTaken, String photoLink) {
         this.title = title;
         this.author = author;
         this.shareLink = shareLink;
@@ -41,19 +47,19 @@ public class Photo {
         this.shareLink = shareLink;
     }
 
-    public String getPublished() {
+    public Calendar getPublished() {
         return published;
     }
 
-    public void setPublished(String published) {
+    public void setPublished(Calendar published) {
         this.published = published;
     }
 
-    public String getDateTaken() {
+    public Calendar getDateTaken() {
         return dateTaken;
     }
 
-    public void setDateTaken(String dateTaken) {
+    public void setDateTaken(Calendar dateTaken) {
         this.dateTaken = dateTaken;
     }
 
