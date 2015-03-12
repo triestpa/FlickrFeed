@@ -67,8 +67,7 @@ public class FlickrFeedParser {
                 eventType = mParser.next();
             }
 
-            //doing something with photos
-            return null;
+            return photos;
         }
         catch (XmlPullParserException e1) {
             Log.e(TAG, e1.getMessage());
