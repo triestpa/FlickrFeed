@@ -11,24 +11,60 @@
     <RelativeLayout
         android:id="@+id/info_pane"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:background="@color/primary"
         android:layout_alignParentBottom="true"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:padding="15dp">
 
-        <ImageView
+        <!--
+        <ImageButton
             android:id="@+id/expand_button"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="25dp"
-            android:src="@drawable/refresh_button_selector"/>
+            android:layout_margin="15dp"
+            android:src="@drawable/refresh_button_selector"/> -->
 
         <TextView
+            android:id="@+id/image_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This is a Text"/>
+            android:maxLines="2"
+            android:textColor="@color/primary_text"
+            android:text="No Title"
+            android:textSize="34sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="left"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:id="@+id/image_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_text"
+            android:text="No Author"
+            android:maxLines="2"
+            android:textSize="28sp"
+            android:layout_below="@+id/image_title"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:id="@+id/image_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textColor="@color/primary_text"
+            android:text="No Date"
+            android:textSize="20sp"
+            android:layout_below="@+id/image_author"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+           />
 
     </RelativeLayout>
 

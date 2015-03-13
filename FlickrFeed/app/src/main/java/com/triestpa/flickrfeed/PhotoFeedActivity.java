@@ -59,8 +59,6 @@ public class PhotoFeedActivity extends ActionBarActivity {
     }
 
     public void animateInfoPaneOut(RelativeLayout infoPane) {
-        infoPane.setVisibility(View.VISIBLE);
-
         infoPane.animate().translationY(infoPane.getHeight());
     }
 
@@ -83,7 +81,6 @@ public class PhotoFeedActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.refresh) {
             return true;
         }
