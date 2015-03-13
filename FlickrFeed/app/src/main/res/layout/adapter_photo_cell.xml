@@ -15,17 +15,15 @@
         android:background="@color/primary"
         android:layout_alignParentBottom="true"
         android:visibility="gone"
-        android:padding="15dp">
+        android:padding="10dp">
 
-        <!--
-        <ImageButton
+        <ImageView
             android:id="@+id/expand_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
-            android:src="@drawable/refresh_button_selector"/> -->
+            android:src="@drawable/refresh_button_selector"/>
 
         <TextView
             android:id="@+id/image_title"
@@ -34,11 +32,12 @@
             android:maxLines="2"
             android:textColor="@color/primary_text"
             android:text="No Title"
-            android:textSize="34sp"
+            android:textSize="32sp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:gravity="left"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:layout_marginRight="30dp"/>
 
         <TextView
             android:id="@+id/image_author"

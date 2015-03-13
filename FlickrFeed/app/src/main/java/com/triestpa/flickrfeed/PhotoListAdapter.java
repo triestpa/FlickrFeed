@@ -1,14 +1,15 @@
 package com.triestpa.flickrfeed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class PhotoListAdapter extends ArrayAdapter<Photo> {
         TextView imageTitle;
         TextView imageAuthor;
         TextView timeCreated;
-        ImageButton expandButton;
+        ImageView expandButton;
     }
 
     @Override
@@ -65,12 +66,21 @@ public class PhotoListAdapter extends ArrayAdapter<Photo> {
             viewHolder.imageAuthor = (TextView) convertView.findViewById(R.id.image_author);
             viewHolder.timeCreated = (TextView) convertView.findViewById(R.id.image_date);
 
-            //  viewHolder.expandButton = (ImageButton) convertView.findViewById(R.id.expand_button);
+            viewHolder.expandButton = (ImageView) convertView.findViewById(R.id.expand_button);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        viewHolder.expandButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, ""+photo.getId());
+                Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
 
         //Load image, and size to fill 1/2 of screen height
         Picasso.with(mContext).load(photo.getPhotoURL()).resize(mWidth, mHeight / 2).centerCrop().into(viewHolder.photoImage);

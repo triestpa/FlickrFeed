@@ -26,11 +26,14 @@ public class PhotoFeedActivity extends ActionBarActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.list_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Beautiful Boston");
 
         ListView photoListView = (ListView) findViewById(R.id.photo_list_view);
         mPhotos = PhotoManager.getPhotos();
         mAdapter = new PhotoListAdapter(this, R.layout.adapter_photo_cell, mPhotos);
         photoListView.setAdapter(mAdapter);
+
+        //Toggle the info pane on image tap
         photoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
