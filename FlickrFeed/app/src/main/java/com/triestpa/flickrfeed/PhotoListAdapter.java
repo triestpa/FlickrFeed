@@ -78,6 +78,7 @@ public class PhotoListAdapter extends ArrayAdapter<Photo> {
             public void onClick(View v) {
                 Log.d(TAG, ""+photo.getId());
                 Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                intent.putExtra(PhotoViewActivity.ARG_ITEM_ID, photo.getId());
                 mContext.startActivity(intent);
             }
         });

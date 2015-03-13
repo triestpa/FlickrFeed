@@ -4,8 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -14,32 +16,27 @@ import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
 
 public class PhotoViewActivity extends ActionBarActivity {
+    public final static String ARG_ITEM_ID = "Photo ID";
     ImageViewTouch imageView;
+    boolean toolbarHidden = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_view);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.photoview_toolbar);
+        RelativeLayout screen = (RelativeLayout) findViewById(R.id.photo_screen);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        //Toggle toolbar visibility on tap
         imageView = (ImageViewTouch) findViewById(R.id.full_image);
 
-        Target target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                imageView.setImageBitmap(bitmap);
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
-
-        String url = "https://farm9.staticflickr.com/8743/16786608152_de11e53975_b.jpg";
+        int id = getIntent().getIntExtra(ARG_ITEM_ID, 0);
+        String url = PhotoManager.getPhotoLink(id);
         Picasso.with(this).load(url).into(target);
     }
 
@@ -58,10 +55,31 @@ public class PhotoViewActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_share) {
             return true;
+        }
+        else if (id == android.R.id.home) {
+            super.onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private Target target = new Target() {
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            imageView.setImageBitmap(bitmap);
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+        }
+    };
+
 }

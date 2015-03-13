@@ -12,18 +12,18 @@
         android:id="@+id/info_pane"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
+        android:background="@color/primary_dark"
         android:layout_alignParentBottom="true"
         android:visibility="gone"
         android:padding="10dp">
 
         <ImageView
             android:id="@+id/expand_button"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/refresh_button_selector"/>
+            android:src="@drawable/expand_button_selector"/>
 
         <TextView
             android:id="@+id/image_title"
@@ -32,38 +32,50 @@
             android:maxLines="2"
             android:textColor="@color/primary_text"
             android:text="No Title"
-            android:textSize="32sp"
+            android:textSize="28sp"
+            android:fontFamily="sans-serif-light"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:gravity="left"
             android:layout_margin="10dp"
             android:layout_marginRight="30dp"/>
 
+
         <TextView
             android:id="@+id/image_author"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/primary_text"
             android:text="No Author"
-            android:maxLines="2"
-            android:textSize="28sp"
+            android:maxLines="1"
+            android:textSize="30sp"
             android:layout_below="@+id/image_title"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:fontFamily="sans-serif-light"
             android:layout_margin="10dp"/>
 
-        <TextView
-            android:id="@+id/image_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:textColor="@color/primary_text"
-            android:text="No Date"
-            android:textSize="20sp"
-            android:layout_below="@+id/image_author"
-            android:layout_centerInParent="true"
-            android:layout_margin="10dp"
-           />
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/profile_icon"
+            android:layout_toLeftOf="@+id/image_author"
+            android:layout_alignBottom="@+id/image_author"
+            />
+
+            <TextView
+                android:id="@+id/image_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary_text"
+                android:text="No Date"
+                android:textSize="20sp"
+                android:layout_gravity="left"
+                android:fontFamily="sans-serif-light"
+                android:layout_below="@+id/image_author"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+               />
 
     </RelativeLayout>
 
