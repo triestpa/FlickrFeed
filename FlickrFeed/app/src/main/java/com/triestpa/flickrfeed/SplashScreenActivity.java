@@ -5,71 +5,71 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-
-import org.xmlpull.v1.XmlPullParser;
+import com.triestpa.flickrfeed.PhotoContent.FlickrFeedParser;
+import com.triestpa.flickrfeed.PhotoContent.Photo;
+import com.triestpa.flickrfeed.PhotoContent.PhotoManager;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+//Show a splash screen while loading the data for the first time
 public class SplashScreenActivity extends ActionBarActivity {
     private final String TAG = SplashScreenActivity.class.getSimpleName();
-    private final String requestURL = "http://api.flickr.com/services/feeds/photos_public.gne?tags=boston";
+    Button mRetryButton;
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        mRetryButton = (Button) findViewById(R.id.retry_button);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_indictor);
+        mRetryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+                mRetryButton.setVisibility(View.GONE);
+            }
+        });
 
+        loadData();
+    }
 
+    public void loadData() {
+        mProgressBar.setVisibility(View.VISIBLE);
         String[] url = new String[1];
-        url[0] = requestURL;
+        url[0] = PhotoManager.requestURL;
         new XMLFeedParseTask().execute(url);
     }
 
     public void endLoading() {
         Intent intent = new Intent(this, PhotoFeedActivity.class);
         startActivity(intent);
+        finish();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.refresh) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void errorFallback(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        mRetryButton.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     //Aysnc task to download and parse feed from Flickr
     class XMLFeedParseTask extends AsyncTask<String, Integer, ArrayList<Photo>> {
         private final String TAG = XMLFeedParseTask.class.getSimpleName();
 
-        XmlPullParser mParser;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
 
         @Override
@@ -83,8 +83,9 @@ public class SplashScreenActivity extends ActionBarActivity {
 
                 FlickrFeedParser feedParser = new FlickrFeedParser();
                 return feedParser.parseXML(xmlData);
-            } catch (IOException e3) {
-                Log.e(TAG, e3.getMessage());
+            } catch (IOException e) {
+                errorFallback(e.getMessage());
+                Log.e(TAG, e.getMessage());
                 return null;
             }
         }
@@ -93,10 +94,10 @@ public class SplashScreenActivity extends ActionBarActivity {
         protected void onPostExecute(ArrayList<Photo> photos) {
             super.onPostExecute(photos);
             if (photos == null || photos.isEmpty()) {
-                //show error message
+                errorFallback("Error Loading Feed");
+                Log.e(TAG, "Error Loading Feed");
             }
             else {
-                Log.d(TAG, "End Loading");
                 PhotoManager.addPhotos(photos);
                 endLoading();
             }

@@ -4,6 +4,12 @@
     tools:context="com.triestpa.flickrfeed.PhotoFeedActivity"
     android:background="@color/grey_1000">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/photo_list_swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/list_toolbar">
+
     <ListView
         android:id="@+id/photo_list_view"
         android:scrollbars="vertical"
@@ -11,8 +17,8 @@
         android:listSelector="#00000000"
         android:dividerHeight="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/list_toolbar"/>
+        android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/list_toolbar"

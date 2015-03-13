@@ -73,7 +73,6 @@
                 android:layout_gravity="left"
                 android:fontFamily="sans-serif-light"
                 android:layout_below="@+id/image_author"
-                android:layout_centerInParent="true"
                 android:layout_margin="10dp"
                />
 
