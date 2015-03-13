@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.squareup.picasso.Picasso;
 
@@ -35,7 +35,7 @@ public class PhotoListAdapter extends ArrayAdapter<Photo> {
 
     private class ViewHolder {
         ImageView photoImage;
-        LinearLayout infoPane;
+        RelativeLayout infoPane;
     }
 
     @Override
@@ -52,15 +52,16 @@ public class PhotoListAdapter extends ArrayAdapter<Photo> {
             viewHolder.photoImage.setMinimumWidth(mWidth);
             viewHolder.photoImage.setMinimumHeight(mHeight/2);
 
-            viewHolder.infoPane = (LinearLayout) convertView.findViewById(R.id.info_pane);
+            viewHolder.infoPane = (RelativeLayout) convertView.findViewById(R.id.info_pane);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        //Load image, and size to fill 1/3 of screen height
+        //Load image, and size to fill 1/2 of screen height
         Picasso.with(mContext).load(photo.getPhotoURL()).resize(mWidth, mHeight / 2).centerCrop().into(viewHolder.photoImage);
 
+        //Ensure that only one detail pane is showing at once
         if (infoPanePosition == position) {
             viewHolder.infoPane.setVisibility(View.VISIBLE);
         }

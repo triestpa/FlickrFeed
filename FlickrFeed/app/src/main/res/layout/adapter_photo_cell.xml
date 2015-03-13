@@ -8,19 +8,28 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/info_pane"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
+        android:background="@color/primary"
         android:layout_alignParentBottom="true"
         android:visibility="gone">
 
+        <ImageView
+            android:id="@+id/expand_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="25dp"
+            android:src="@drawable/refresh_button_selector"/>
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:background="@color/primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="This is a Text"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

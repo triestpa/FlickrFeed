@@ -7,7 +7,19 @@
     <ListView
         android:id="@+id/photo_list_view"
         android:scrollbars="vertical"
-        android:divider="@color/primary"
+        android:divider="@color/primary_dark"
+        android:listSelector="#00000000"
+        android:dividerHeight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/list_toolbar"/>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/list_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:layout_alignParentTop="true"/>
+
 </RelativeLayout>

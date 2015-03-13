@@ -2,13 +2,13 @@ package com.triestpa.flickrfeed;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -17,14 +17,15 @@ public class PhotoFeedActivity extends ActionBarActivity {
     private final String TAG = PhotoFeedActivity.class.getSimpleName();
     ArrayList<Photo> mPhotos;
     PhotoListAdapter mAdapter;
-    LinearLayout currentInfoPane;
+    RelativeLayout currentInfoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_list);
 
-        Log.d(TAG, "Show List");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.list_toolbar);
+        setSupportActionBar(toolbar);
 
         ListView photoListView = (ListView) findViewById(R.id.photo_list_view);
         mPhotos = PhotoManager.getPhotos();
@@ -33,23 +34,43 @@ public class PhotoFeedActivity extends ActionBarActivity {
         photoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LinearLayout infoPane = (LinearLayout) view.findViewById(R.id.info_pane);
+                RelativeLayout infoPane = (RelativeLayout) view.findViewById(R.id.info_pane);
                 int infoPanePosition = mAdapter.getInfoPanePosition();
+
+                //If the info pane is at the current position, close it
                 if (infoPanePosition == position) {
-                    infoPane.setVisibility(View.GONE);
+                    animateInfoPaneOut(currentInfoPane);
                     currentInfoPane = null;
                     mAdapter.setInfoPanePosition(-1);
                 }
-                if (infoPanePosition != -1 && currentInfoPane != null) {
-                    currentInfoPane.setVisibility(View.GONE);
+                //Else open the info pane at the selected picture
+                else {
+                    //If there is another info pane open, close it
+                    if (infoPanePosition != -1 && currentInfoPane != null) {
+                        animateInfoPaneOut(currentInfoPane);
+                    }
+
+                    mAdapter.setInfoPanePosition(position);
+                    animateInfoPaneIn(infoPane);
+                    currentInfoPane = infoPane;
                 }
-                mAdapter.setInfoPanePosition(position);
-                infoPane.setVisibility(View.VISIBLE);
-                currentInfoPane = infoPane;
             }
         });
     }
 
+    public void animateInfoPaneOut(RelativeLayout infoPane) {
+        infoPane.setVisibility(View.VISIBLE);
+
+        infoPane.animate().translationY(infoPane.getHeight());
+    }
+
+    public void animateInfoPaneIn(RelativeLayout infoPane) {
+        infoPane.setVisibility(View.VISIBLE);
+
+        infoPane.setTranslationY(infoPane.getHeight());
+        infoPane.animate().translationY(0);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,7 +84,7 @@ public class PhotoFeedActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.refresh) {
             return true;
         }
 
