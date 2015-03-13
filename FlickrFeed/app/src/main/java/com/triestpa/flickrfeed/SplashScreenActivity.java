@@ -1,12 +1,13 @@
 package com.triestpa.flickrfeed;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -36,6 +37,8 @@ public class SplashScreenActivity extends ActionBarActivity {
     }
 
     public void endLoading() {
+        Intent intent = new Intent(this, PhotoFeedActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -96,6 +99,8 @@ public class SplashScreenActivity extends ActionBarActivity {
                 //show error message
             }
             else {
+                Log.d(TAG, "End Loading");
+                PhotoManager.addPhotos(photos);
                 endLoading();
             }
         }

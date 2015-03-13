@@ -50,12 +50,12 @@ public class PhotoManager {
         int id = rand.nextInt(randMax + 1);
 
         //make sure the id is not already assigned to another photo
-        while (mPhotos.get(id) != null) {
+        while (LinkMap.get(id) != null) {
             id = rand.nextInt(randMax);
         }
 
         photo.setId(id);
-        LinkMap.put(id, photo.getPhotoLink());
+        LinkMap.put(id, photo.getPhotoURL());
         mPhotos.add(photo);
     }
 

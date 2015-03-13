@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">FlickrFeed</string>
     <string name="action_refresh">Refresh</string>
+    <string name="title_activity_photo_list">PhotoListActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

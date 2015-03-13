@@ -8,19 +8,19 @@ public class Photo {
     private String shareLink;
     private Calendar published;
     private Calendar dateTaken;
-    private String photoLink;
+    private String photoURL;
     private int id;
 
     public Photo() {
     }
 
-    public Photo(String title, String author, String shareLink, Calendar published, Calendar dateTaken, String photoLink) {
+    public Photo(String title, String author, String shareLink, Calendar published, Calendar dateTaken, String photoURL) {
         this.title = title;
         this.author = author;
         this.shareLink = shareLink;
         this.published = published;
         this.dateTaken = dateTaken;
-        this.photoLink = photoLink;
+        this.photoURL = photoURL;
     }
 
     public String getTitle() {
@@ -63,12 +63,12 @@ public class Photo {
         this.dateTaken = dateTaken;
     }
 
-    public String getPhotoLink() {
-        return photoLink;
+    public String getPhotoURL() {
+        return photoURL;
     }
 
-    public void setPhotoLink(String photoLink) {
-        this.photoLink = photoLink;
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
     }
 
     public int getId() {

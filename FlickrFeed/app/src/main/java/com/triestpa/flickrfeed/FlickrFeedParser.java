@@ -50,7 +50,7 @@ public class FlickrFeedParser {
                             } else if (name.equals("author")){
                                 thisPhoto.setAuthor(getAuthor());
                             } else if (name.equals("link")){
-                                thisPhoto.setPhotoLink(getURL());
+                                thisPhoto.setPhotoURL(getURL());
                             } else if (name.equals("published")){
                                 thisPhoto.setPublished(getDate());
                             } else if (name.equals("flickr:date_taken")){
